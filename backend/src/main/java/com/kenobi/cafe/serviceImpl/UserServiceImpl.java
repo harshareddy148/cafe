@@ -13,6 +13,7 @@ import com.kenobi.cafe.utils.EmailUtils;
 import com.kenobi.cafe.wrapper.UserWrapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,12 +27,18 @@ import java.util.*;
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
-    private final UserDao userDao;
-    private final AuthenticationManager authenticationManager;
-    private final CustomerUsersDetailsService customerUsersDetailsService;
-    private final JwtUtil jwtUtil;
-    private final JwtFilter jwtFilter;
-    private final EmailUtils emailUtils;
+    @Autowired
+     UserDao userDao;
+    @Autowired
+    private  AuthenticationManager authenticationManager;
+    @Autowired
+    private  CustomerUsersDetailsService customerUsersDetailsService;
+    @Autowired
+    private  JwtUtil jwtUtil;
+    @Autowired
+    private  JwtFilter jwtFilter;
+    @Autowired
+    private  EmailUtils emailUtils;
     @Override
     public ResponseEntity<String> signup(Map<String, String> requestMap) {
         log.info("Inside signup {}", requestMap);
@@ -77,8 +84,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<List<UserWrapper>> getAllUsers() {
         try {
-            if(jwtFilter.isAdmin()) return new ResponseEntity<>(userDao.getAllUser(), HttpStatus.OK);
-            else return new ResponseEntity<>(new ArrayList<>(), HttpStatus.UNAUTHORIZED);
+            if(jwtFilter.isAdmin()) {
+                return new ResponseEntity<>(userDao.getAllUser(), HttpStatus.OK);
+            }
+            else{ return new ResponseEntity<>(new ArrayList<>(), HttpStatus.UNAUTHORIZED);}
         } catch (Exception exception){
             exception.printStackTrace();
         }
@@ -89,10 +98,10 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<String> update(Map<String, String> requestMap) {
         try {
             if(jwtFilter.isAdmin()){
-                Optional<User> user = userDao.findById(Integer.parseInt(requestMap.get("id")));
-                if(user.isPresent()){
+                Optional<User> optional = userDao.findById(Integer.parseInt(requestMap.get("id")));
+                if(!optional.isEmpty()){
                     userDao.updateStatus(requestMap.get("status"), Integer.parseInt(requestMap.get("id")));
-                    this.sendMailToAllAdmin(requestMap.get("status"), user.get().getEmail(), userDao.getAllAdmin());
+                   sendMailToAllAdmin(requestMap.get("status"), optional.get().getEmail(), userDao.getAllAdmin());
                     return CafeUtils.getResponseEntity("User status updated successfully", HttpStatus.OK);
                 } else {
                     return CafeUtils.getResponseEntity("User id does not exist", HttpStatus.NO_CONTENT);
@@ -112,7 +121,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<String> changePassword(Map<String, String> requestMap) {
         try {
-            User user = userDao.findByEmail(jwtFilter.getCurrentUsername());
+            User user = userDao.findByEmail(jwtFilter.getCurrentUser());
             if(user != null){
                 if(user.getPassword().equalsIgnoreCase(requestMap.get("oldPassword"))){
                     user.setPassword(requestMap.get("newPassword"));
@@ -142,18 +151,21 @@ public class UserServiceImpl implements UserService {
     }
 
     private void sendMailToAllAdmin(String status, String user, List<String> allAdmin) {
-        allAdmin.remove(jwtFilter.getCurrentUsername());
+        allAdmin.remove(jwtFilter.getCurrentUser());
         if(status!=null && status.equalsIgnoreCase("true"))
-            emailUtils.sendSimpleMessage(jwtFilter.getCurrentUsername(), "Account Approved","User:- " + user + "\n is approved by \nADMIN:- " +jwtFilter.getCurrentUsername(), allAdmin);
+            emailUtils.sendSimpleMessage(jwtFilter.getCurrentUser(), "Account Approved","User:- " + user + "\n is approved by \nADMIN:- " +jwtFilter.getCurrentUser(), allAdmin);
         else
-            emailUtils.sendSimpleMessage(jwtFilter.getCurrentUsername(), "Account Disabled","User:- " + user + "\n is disabled by \nADMIN:- " +jwtFilter.getCurrentUsername(), allAdmin);
+            emailUtils.sendSimpleMessage(jwtFilter.getCurrentUser(), "Account Disabled","User:- " + user + "\n is disabled by \nADMIN:- " +jwtFilter.getCurrentUser(), allAdmin);
     }
 
     private boolean validateSignUpMap(Map<String, String> requestMap){
-        return requestMap.containsKey("name")
+        if( requestMap.containsKey("name")
                 && requestMap.containsKey("contactNumber")
                 && requestMap.containsKey("email")
-                && requestMap.containsKey("password");
+                && requestMap.containsKey("password")){
+            return true;
+        }
+        return false;
     }
     private User getUserFromMap(Map<String, String> requestMap){
         User user = new User();

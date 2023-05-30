@@ -1,6 +1,9 @@
 package com.kenobi.cafe.utils;
 
+
+import com.kenobi.cafe.pojo.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -11,12 +14,14 @@ import javax.mail.internet.MimeMessage;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class EmailUtils {
-    private final JavaMailSender emailSender;
+    @Autowired
+    private  JavaMailSender emailSender;
+
+
     public void sendSimpleMessage(String to, String subject, String text, List<String> list){
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("hvr7993490148@gmail.com");
+        message.setFrom("harshakristapathi@gmail.com");
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
@@ -33,7 +38,7 @@ public class EmailUtils {
     public void forgotMail(String to, String subject, String password) throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
-        helper.setFrom("hvr7993490148@gmail.com");
+        helper.setFrom("harshakristapathi@gmail.com");
         helper.setTo(to);
         helper.setSubject(subject);
         String htmlMessage = "<p><b>Your login details for Cafe Management System" +
@@ -42,5 +47,4 @@ public class EmailUtils {
         message.setContent(htmlMessage, "text/html");
         emailSender.send(message);
     }
-
 }

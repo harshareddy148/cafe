@@ -114,7 +114,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<ProductWrapper> getproductbyId(Integer id) {
+    public ResponseEntity<ProductWrapper> getById(Integer id) {
         try {
             return new ResponseEntity<>(productDao.getProductById(id), HttpStatus.OK);
         } catch (Exception exception){

@@ -6,10 +6,11 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class ProductWrapper {
     private Integer id;
-    private String name;
     private String description;
+    private String name;
     private Integer price;
     private String status;
     private Integer categoryId;
@@ -25,15 +26,5 @@ public class ProductWrapper {
         this.name = name;
         this.description = description;
         this.price = price;
-    }
-
-    public ProductWrapper(Integer id, String name, String description, Integer price, String status, Integer categoryId, String categoryName) {
-        this.id = id;
-        this.description = description;
-        this.name = name;
-        this.price = price;
-        this.status = status;
-        this.categoryId = categoryId;
-        this.categoryName = categoryName;
     }
 }

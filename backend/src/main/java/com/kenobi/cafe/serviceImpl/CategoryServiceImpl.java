@@ -8,6 +8,7 @@ import com.kenobi.cafe.pojo.Category;
 import com.kenobi.cafe.service.CategoryService;
 import com.kenobi.cafe.utils.CafeUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,12 +19,13 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
-    private final CategoryDao categoryDao;
-    private final JwtFilter jwtFilter;
+    @Autowired
+    private  CategoryDao categoryDao;
+    @Autowired
+    private  JwtFilter jwtFilter;
     @Override
-    public ResponseEntity<String> addCategory(Map<String, String> requestMap) {
+    public ResponseEntity<String> addNewCategory(Map<String, String> requestMap) {
         try {
             if(jwtFilter.isAdmin()){
                 if(this.validateCategoryMap(requestMap, false)){
@@ -77,8 +79,9 @@ public class CategoryServiceImpl implements CategoryService {
         if(requestMap.containsKey("name")){
             if(requestMap.containsKey("id") && validateId){
                 return true;
+            } else if (!validateId) {
+                return true;
             }
-            return !validateId;
         }
         return false;
     }

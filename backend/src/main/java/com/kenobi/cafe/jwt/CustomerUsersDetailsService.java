@@ -4,6 +4,7 @@ import com.kenobi.cafe.dao.UserDao;
 import com.kenobi.cafe.pojo.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,11 +14,11 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class CustomerUsersDetailsService implements UserDetailsService {
-    private final UserDao userDao;
-    private User userDetail;
+    @Autowired
+     UserDao userDao;
+    private com.kenobi.cafe.pojo.User userDetail;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.info("Inside loadUserByUsername {}", username);
@@ -26,7 +27,7 @@ public class CustomerUsersDetailsService implements UserDetailsService {
             return new org.springframework.security.core.userdetails.User(userDetail.getEmail(), userDetail.getPassword(),new ArrayList<>());
         else throw new UsernameNotFoundException("User not found");
     }
-    public User getUserDetail(){
+    public com.kenobi.cafe.pojo.User getUserDetail(){
         return userDetail;
     }
 }

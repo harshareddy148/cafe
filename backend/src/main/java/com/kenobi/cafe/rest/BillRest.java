@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping(path = "/bill")
+@RequestMapping("/bill")
 public interface BillRest {
-    @PostMapping("/generateReport")
-     ResponseEntity<String> generateReport(@RequestBody Map<String, Object> requestMap);
-    @GetMapping(path = "/getBills")
-     ResponseEntity<List<Bill>> getBills();
-    @PostMapping("/getPdf")
-     ResponseEntity<byte[]> getPdf(@RequestBody Map<String, Object> requestMap);
-    @PostMapping("/delete/{id}")
-     ResponseEntity<String> deleteBill(@PathVariable Integer id);
+    @PostMapping("/generatereport")
+    public ResponseEntity<String> generateReport(@RequestBody Map<String, Object> requestMap);
+    @GetMapping(path = "/getbills")
+    public ResponseEntity<List<Bill>> getBills();
+    @PostMapping("/get-pdf")
+    public ResponseEntity<byte[]> getPdf(@RequestBody Map<String, Object> requestMap);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteBill(@PathVariable Integer id);
 }

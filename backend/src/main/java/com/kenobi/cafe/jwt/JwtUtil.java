@@ -13,7 +13,7 @@ import java.util.function.Function;
 @Service
 @Slf4j
 public class JwtUtil {
-    private String secret = "kenobi123kenobiABC";
+    private String secret = "harshaVardhna14526";
     public String extractUsername(String token){
         return this.extractClaims(token, Claims::getSubject);
     }

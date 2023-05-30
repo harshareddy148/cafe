@@ -18,8 +18,8 @@ public class CafeUtils {
     private CafeUtils(){
 
     }
-    public static ResponseEntity<String> getResponseEntity(String response, HttpStatus httpStatus){
-        return new ResponseEntity<String>("{\"message\":\"" + response + "\"}", httpStatus);
+    public static ResponseEntity<String> getResponseEntity(String responseMessage, HttpStatus httpStatus){
+        return new ResponseEntity<String>("{\"message\":\"" + responseMessage + "\"}", httpStatus);
     }
     public static String getUUID(){
         Date date = new Date();
@@ -44,6 +44,4 @@ public class CafeUtils {
         }
         return false;
     }
-
-
 }

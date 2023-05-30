@@ -6,7 +6,6 @@ import com.kenobi.cafe.rest.BillRest;
 import com.kenobi.cafe.service.BillService;
 import com.kenobi.cafe.utils.CafeUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,10 +15,9 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-
+@RequiredArgsConstructor
 public class BillRestImpl implements BillRest {
-    @Autowired
-    BillService billService;
+    private final BillService billService;
     @Override
     public ResponseEntity<String> generateReport(Map<String, Object> requestMap) {
         try {

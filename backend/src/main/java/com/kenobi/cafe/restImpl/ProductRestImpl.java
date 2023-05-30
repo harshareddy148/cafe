@@ -79,9 +79,9 @@ public class ProductRestImpl implements ProductRest {
     }
 
     @Override
-    public ResponseEntity<ProductWrapper> getproductbyId(Integer id) {
+    public ResponseEntity<ProductWrapper> getById(Integer id) {
         try {
-            return productService.getproductbyId(id);
+            return productService.getById(id);
         } catch (Exception exception){
             exception.printStackTrace();
         }

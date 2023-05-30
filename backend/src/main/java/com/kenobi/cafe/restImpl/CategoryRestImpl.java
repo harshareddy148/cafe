@@ -6,6 +6,7 @@ import com.kenobi.cafe.rest.CategoryRest;
 import com.kenobi.cafe.service.CategoryService;
 import com.kenobi.cafe.utils.CafeUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,13 +16,19 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequiredArgsConstructor
+
 public class CategoryRestImpl implements CategoryRest {
-    private final CategoryService categoryService;
+
+    @Autowired
+    private CategoryService categoryService;
+
+
+
+
     @Override
-    public ResponseEntity<String> addCategory(Map<String, String> requestMap) {
+    public ResponseEntity<String> addNEWCategory(Map<String, String> requestMap) {
         try {
-            return categoryService.addCategory(requestMap);
+            return categoryService.addNewCategory(requestMap);
         } catch (Exception exception){
             exception.printStackTrace();
         }
