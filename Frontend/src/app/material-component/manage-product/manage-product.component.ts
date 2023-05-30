@@ -120,7 +120,7 @@ export class ManageProductComponent implements OnInit {
       if(error.error?.message){
         this.responseMessage = error.error?.message; 
       }else{
-        //alert("status is updated successfully");
+        alert("status is updated successfully");
 
         this.responseMessage = GlobalConstants.genericError;
       }

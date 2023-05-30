@@ -55,7 +55,7 @@ export class ChangePasswordComponent implements OnInit {
     this.userService.changePassword(data).subscribe((response:any)=>{
       this.responseMessage = response?.message;
       this.dialogRef.close();
-      alert("Successfully Login");
+      alert("Successfully ChangePassword");
       this.router.navigate(['/cafe/dashboard']);
       this.snackbarService.openSnackBar(this.responseMessage , "success");
     },(error)=>{

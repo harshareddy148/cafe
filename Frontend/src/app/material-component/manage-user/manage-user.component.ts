@@ -52,11 +52,11 @@ export class ManageUserComponent implements OnInit {
       this.responseMessage = response?.message;
       this.SnackbarService.openSnackBar(this.responseMessage , "success");
     },(error:any)=>{
-      //console.log(error.error?.message);
+      console.log(error.error?.message);
       if(error.error?.message){
         this.responseMessage = error.error?.message; 
       }else{
-        //alert("status is updated successfully");
+        alert("status is updated successfully");
 
         this.responseMessage = GlobalConstants.genericError;
       }

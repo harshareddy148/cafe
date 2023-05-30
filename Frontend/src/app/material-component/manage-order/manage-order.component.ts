@@ -137,7 +137,7 @@ export class ManageOrderComponent implements OnInit {
       this.totalAmount = this.totalAmount + fromData.total;
       this.dataSource.push({id:fromData.product.id , name:fromData.product.name , category:fromData.category.name, quantity:fromData.quantity, price:fromData.price,total:fromData.total});
       this.dataSource = [...this.dataSource];
-      //alert("Order Added Successfully");
+      alert("Order Added Successfully");
       this.SnackbarService.openSnackBar(GlobalConstants.productAdded , "Success");
     }else{
       this.SnackbarService.openSnackBar(GlobalConstants.productExistError , GlobalConstants.error);
