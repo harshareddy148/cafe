@@ -42,8 +42,13 @@ export class ForgotPasswordComponent implements OnInit {
     this.userService.forgotPassword(data).subscribe((response:any)=>{
       this.ngxService.stop();
       this.dialogRef.close();
+      localStorage.setItem('token' , response.token);
+      alert("Check your email for credentials");
       this.responseMessage = response?.message;
       this.snackbarService.openSnackBar(this.responseMessage,"");
+      
+     
+
     },(error)=>{
       this.ngxService.stop();
       if(error.error?.message){
