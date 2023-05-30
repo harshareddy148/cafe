@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<String> changePassword(Map<String, String> requestMap) {
         try {
-            User user = userDao.findByEmail(jwtFilter.getCurrentUser());
+            User user = userDao.findByEmail(jwtFilter.getCurrentUsername());
             if(user != null){
                 if(user.getPassword().equalsIgnoreCase(requestMap.get("oldPassword"))){
                     user.setPassword(requestMap.get("newPassword"));
@@ -151,11 +151,11 @@ public class UserServiceImpl implements UserService {
     }
 
     private void sendMailToAllAdmin(String status, String user, List<String> allAdmin) {
-        allAdmin.remove(jwtFilter.getCurrentUser());
+        allAdmin.remove(jwtFilter.getCurrentUsername());
         if(status!=null && status.equalsIgnoreCase("true"))
-            emailUtils.sendSimpleMessage(jwtFilter.getCurrentUser(), "Account Approved","User:- " + user + "\n is approved by \nADMIN:- " +jwtFilter.getCurrentUser(), allAdmin);
+            emailUtils.sendSimpleMessage(jwtFilter.getCurrentUsername(), "Account Approved","User:- " + user + "\n is approved by \nADMIN:- " +jwtFilter.getCurrentUsername(), allAdmin);
         else
-            emailUtils.sendSimpleMessage(jwtFilter.getCurrentUser(), "Account Disabled","User:- " + user + "\n is disabled by \nADMIN:- " +jwtFilter.getCurrentUser(), allAdmin);
+            emailUtils.sendSimpleMessage(jwtFilter.getCurrentUsername(), "Account Disabled","User:- " + user + "\n is disabled by \nADMIN:- " +jwtFilter.getCurrentUsername(), allAdmin);
     }
 
     private boolean validateSignUpMap(Map<String, String> requestMap){

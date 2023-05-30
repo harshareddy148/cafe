@@ -21,12 +21,8 @@ public class CategoryRestImpl implements CategoryRest {
 
     @Autowired
     private CategoryService categoryService;
-
-
-
-
     @Override
-    public ResponseEntity<String> addNEWCategory(Map<String, String> requestMap) {
+    public ResponseEntity<String> addCategory(Map<String, String> requestMap) {
         try {
             return categoryService.addNewCategory(requestMap);
         } catch (Exception exception){

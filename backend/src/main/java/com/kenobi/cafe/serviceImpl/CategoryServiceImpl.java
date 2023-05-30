@@ -79,9 +79,8 @@ public class CategoryServiceImpl implements CategoryService {
         if(requestMap.containsKey("name")){
             if(requestMap.containsKey("id") && validateId){
                 return true;
-            } else if (!validateId) {
-                return true;
             }
+            return !validateId;
         }
         return false;
     }
@@ -93,5 +92,8 @@ public class CategoryServiceImpl implements CategoryService {
         category.setName(requestMap.get("name"));
         return category;
     }
+
+   
+
 
 }
