@@ -38,7 +38,8 @@ The purpose of this project is to facilitate the management of the cafeteria and
 
 <h4>Angular Part</h4>
 in terminal using vs code you will need this commands<br>
-- $env:NODE_OPTIONS = "--openssl-legacy-provider"
+- $env:NODE_OPTIONS = "--openssl-legacy-provider",
+set NODE_OPTIONS=--openssl-legacy-provider
 <br>- ng s
 <br>- Then use this url in your broswer -> localhost:4200
 
