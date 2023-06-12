@@ -5,6 +5,7 @@ import { GlobalConstants } from '../shared/global-constants';
 import { SnackbarService } from '../snackbar.service';
 import { UserService } from '../user.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-forgot-password',
@@ -22,8 +23,8 @@ export class ForgotPasswordComponent implements OnInit {
   constructor(private formBulider:FormBuilder, 
     private userService:UserService , 
     private ngxService:NgxUiLoaderService,
-    public dialogRef:MatDialogRef<ForgotPasswordComponent> ,
-    private snackbarService:SnackbarService) { }
+    // public dialogRef:MatDialogRef<ForgotPasswordComponent> ,
+    private snackbarService:SnackbarService,private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.forgotPasswordForm = this.formBulider.group({
@@ -41,20 +42,29 @@ export class ForgotPasswordComponent implements OnInit {
     
     this.userService.forgotPassword(data).subscribe((response:any)=>{
       this.ngxService.stop();
-      this.dialogRef.close();
+      // this.dialogRef.close();
       localStorage.setItem('token' , response.token);
-      alert("Check your email for credentials");
-      this.responseMessage = response?.message;
-      this.snackbarService.openSnackBar(this.responseMessage,"");
-      
-     
-
+      // alert("Check your email for credentials");
+      // this.responseMessage = response?.message;
+      // this.snackbarService.openSnackBar(this.responseMessage,"");
+      this.snackBar.open("Check your email for credentials", "OK", {
+        duration: 3000,
+        panelClass: ['green-snackbar', 'login-snackbar'],
+       });
     },(error)=>{
       this.ngxService.stop();
       if(error.error?.message){
-        this.responseMessage = error.error?.message;
+        // this.responseMessage = error.error?.message;
+        this.snackBar.open("Something went wrong. pleases try again later ", "OK", {
+          duration: 3000,
+          panelClass: ['red-snackbar', 'login-snackbar'],
+         });
       }else{
-        this.responseMessage = GlobalConstants.genericError;
+        // this.responseMessage = GlobalConstants.genericError;
+        this.snackBar.open("Something went wrong. pleases try again later ", "OK", {
+          duration: 3000,
+          panelClass: ['red-snackbar', 'login-snackbar'],
+         });
       }
       this.snackbarService.openSnackBar(this.responseMessage , GlobalConstants.error);
     })

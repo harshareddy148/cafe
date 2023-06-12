@@ -5,6 +5,7 @@ import { UserService } from 'src/app/user.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { GlobalConstants } from 'src/app/shared/global-constants';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-manage-user',
@@ -19,7 +20,7 @@ export class ManageUserComponent implements OnInit {
 
   constructor(private userService:UserService,
     private dialog:MatDialog,
-    private SnackbarService:SnackbarService,
+    private SnackbarService:SnackbarService,private snackBar:MatSnackBar,
     private router:Router) { }
 
   ngOnInit(): void {
@@ -56,7 +57,11 @@ export class ManageUserComponent implements OnInit {
       if(error.error?.message){
         this.responseMessage = error.error?.message; 
       }else{
-        alert("status is updated successfully");
+        // alert("status is updated successfully");
+        this.snackBar.open("status is updated successfully", "", {
+          duration: 3000,
+          panelClass: ['green-snackbar', 'login-snackbar'],
+         });
 
         this.responseMessage = GlobalConstants.genericError;
       }

@@ -7,6 +7,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 import { ConfirmationComponent } from '../dialog/view-bill-products/confirmation/confirmation.component';
 import { ProductComponent } from '../dialog/view-bill-products/product/product.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-manage-product',
@@ -22,7 +23,7 @@ export class ManageProductComponent implements OnInit {
 
   constructor(private productService:ProductService,
     private dialog:MatDialog,
-    private SnackbarService:SnackbarService,
+    private SnackbarService:SnackbarService,private snackBar: MatSnackBar,
     private router:Router) { }
 
   ngOnInit(): void {
@@ -94,7 +95,11 @@ export class ManageProductComponent implements OnInit {
     this.productService.delete(id).subscribe((response:any)=>{
       this.tableData();
       this.responseMessage = response?.message;
-      //alert("Product is Deleted");
+      // alert("Product is Deleted");
+      this.snackBar.open("Product is Deleted", "", {
+        duration: 3000,
+        panelClass: ['green-snackbar', 'login-snackbar'],
+       });
       this.SnackbarService.openSnackBar(this.responseMessage , "success");
     },(error:any)=>{
       console.log(error.error?.message);
@@ -120,8 +125,12 @@ export class ManageProductComponent implements OnInit {
       if(error.error?.message){
         this.responseMessage = error.error?.message; 
       }else{
-        alert("status is updated successfully");
-
+        // alert("status is updated successfully");
+        
+        this.snackBar.open("status is updated successfully", "", {
+          duration: 3000,
+          panelClass: ['green-snackbar', 'login-snackbar'],
+         });
         this.responseMessage = GlobalConstants.genericError;
       }
       this.SnackbarService.openSnackBar(this.responseMessage, GlobalConstants.error);

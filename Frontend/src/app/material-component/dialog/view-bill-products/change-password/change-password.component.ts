@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { GlobalConstants } from 'src/app/shared/global-constants';
 import { SnackbarService } from 'src/app/snackbar.service';
@@ -24,7 +25,7 @@ export class ChangePasswordComponent implements OnInit {
     private formBulider:FormBuilder,
     private userService:UserService,
     public dialogRef:MatDialogRef<ChangePasswordComponent>,
-    private snackbarService:SnackbarService
+    private snackbarService:SnackbarService,private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -55,7 +56,11 @@ export class ChangePasswordComponent implements OnInit {
     this.userService.changePassword(data).subscribe((response:any)=>{
       this.responseMessage = response?.message;
       this.dialogRef.close();
-      alert("Successfully ChangePassword");
+      // alert("Successfully ChangePassword");
+      this.snackBar.open("Successfully ChangePassword", "", {
+        duration: 3000,
+        panelClass: ['green-snackbar', 'login-snackbar'],
+       });
       this.router.navigate(['/cafe/dashboard']);
       this.snackbarService.openSnackBar(this.responseMessage , "success");
     },(error)=>{

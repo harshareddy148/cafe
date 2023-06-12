@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CategoryService } from 'src/app/services/category.service';
 import { ProductService } from 'src/app/services/product.service';
 import { GlobalConstants } from 'src/app/shared/global-constants';
@@ -25,7 +26,7 @@ export class ProductComponent implements OnInit {
     protected productService: ProductService,
     public dialogRef: MatDialogRef<ProductComponent>,
     private snackbarService: SnackbarService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -77,8 +78,12 @@ export class ProductComponent implements OnInit {
       this.dialogRef.close();
       this.onAddProduct.emit();
       this.responseMessage = response.message;
-      alert("Successfully Add Product");
-      this.snackbarService.openSnackBar(this.responseMessage, "success");
+      // alert("Successfully Add Product");
+      this.snackBar.open("Successfully Add Product", "", {
+        duration: 3000,
+        panelClass: ['green-snackbar', 'login-snackbar'],
+       });
+      // this.snackbarService.openSnackBar(this.responseMessage, "success");
     }, (error) => {
       this.dialogRef.close();
       console.error(error);
@@ -104,8 +109,12 @@ export class ProductComponent implements OnInit {
       this.dialogRef.close();
       this.onEditProduct.emit();
       this.responseMessage = response.message;
-      alert("Successfully Update Product");
-      this.snackbarService.openSnackBar(this.responseMessage, "success");
+      // alert("Successfully Update Product");
+      this.snackBar.open("Successfully Update Product", "", {
+        duration: 3000,
+        panelClass: ['green-snackbar', 'login-snackbar'],
+       });
+      // this.snackbarService.openSnackBar(this.responseMessage, "success");
     }, (error) => {
       this.dialogRef.close();
       console.error(error);

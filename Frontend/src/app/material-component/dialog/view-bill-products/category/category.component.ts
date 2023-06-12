@@ -5,6 +5,7 @@ import { CategoryService } from 'src/app/services/category.service';
 import { SnackbarService } from 'src/app/snackbar.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { GlobalConstants } from 'src/app/shared/global-constants';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-category',
@@ -25,7 +26,7 @@ responseMessage:any;
   private formBulider:FormBuilder,
   protected categoryService:CategoryService,
   public dialogRef: MatDialogRef<CategoryComponent>,
-  private snackbarService:SnackbarService
+  private snackbarService:SnackbarService,private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -55,7 +56,11 @@ responseMessage:any;
       this.dialogRef.close();
       this.onAddCategory.emit();
       this.responseMessage = response.message;
-      alert("Successfully Add Category");
+      // alert("Successfully Add Category");
+      this.snackBar.open("Successfully Add Category", "", {
+        duration: 3000,
+        panelClass: ['green-snackbar', 'login-snackbar'],
+       });
       this.snackbarService.openSnackBar(this.responseMessage , "success");
     },(error)=>{
       this.dialogRef.close();
@@ -79,7 +84,11 @@ responseMessage:any;
       this.dialogRef.close();
       this.onEditCatefory.emit();
       this.responseMessage = response.message;
-      alert("Successfully Update Category");
+      // alert("Successfully Update Category");
+      this.snackBar.open("Successfully Update Category", "", {
+        duration: 3000,
+        panelClass: ['green-snackbar', 'login-snackbar'],
+       });
       this.snackbarService.openSnackBar(this.responseMessage , "success");
     },(error)=>{
       this.dialogRef.close();

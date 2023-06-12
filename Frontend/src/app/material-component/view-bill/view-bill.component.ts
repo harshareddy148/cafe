@@ -9,6 +9,7 @@ import { SnackbarService } from 'src/app/snackbar.service';
 import { ConfirmationComponent } from '../dialog/view-bill-products/confirmation/confirmation.component';
 import { ViewBillProductsComponent } from '../dialog/view-bill-products/view-bill-products.component';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-view-bill',
@@ -25,7 +26,7 @@ export class ViewBillComponent implements OnInit {
     private dialog: MatDialog,
     private SnackbarService: SnackbarService,     
      private ngxService:NgxUiLoaderService,
-    private router: Router) { }
+    private router: Router,private snackBar:MatSnackBar) { }
 
   ngOnInit(): void {
     this.ngxService.start();
@@ -82,10 +83,14 @@ export class ViewBillComponent implements OnInit {
       this.ngxService.stop();
       this.tableData();
       this.responseMessage = response?.message;
-      this.SnackbarService.openSnackBar(this.responseMessage, "success");
+      // this.SnackbarService.openSnackBar(this.responseMessage, "success");
+      this.snackBar.open("Bill deleted Successfully", "", {
+        duration: 3000,
+        panelClass: ['green-snackbar', 'login-snackbar'],
+       });
     }, (error: any) => {
       this.ngxService.stop();
-      console.log(error);
+      // console.log(error);
       if (error.error?.message) {
         this.responseMessage = error.error?.message;
       } else {

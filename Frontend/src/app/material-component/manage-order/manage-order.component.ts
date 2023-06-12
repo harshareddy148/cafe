@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import * as saveAs from 'file-saver';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
@@ -32,7 +33,7 @@ export class ManageOrderComponent implements OnInit {
     private billService: BillService,
     private dialog: MatDialog,
     private ngxService:NgxUiLoaderService,
-    private SnackbarService: SnackbarService,
+    private SnackbarService: SnackbarService,private snackBar: MatSnackBar,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -137,8 +138,12 @@ export class ManageOrderComponent implements OnInit {
       this.totalAmount = this.totalAmount + fromData.total;
       this.dataSource.push({id:fromData.product.id , name:fromData.product.name , category:fromData.category.name, quantity:fromData.quantity, price:fromData.price,total:fromData.total});
       this.dataSource = [...this.dataSource];
-      alert("Order Added Successfully");
-      this.SnackbarService.openSnackBar(GlobalConstants.productAdded , "Success");
+      // alert("Order Added Successfully");
+      this.snackBar.open("Order Added Successfully", "", {
+        duration: 3000,
+        panelClass: ['green-snackbar', 'login-snackbar'],
+       });
+      // this.SnackbarService.openSnackBar(GlobalConstants.productAdded , "Success");
     }else{
       this.SnackbarService.openSnackBar(GlobalConstants.productExistError , GlobalConstants.error);
     }
@@ -148,6 +153,10 @@ export class ManageOrderComponent implements OnInit {
     this.totalAmount = this.totalAmount - element.total;
     this.dataSource.splice(value,1);
     this.dataSource = [...this.dataSource];
+    this.snackBar.open("Order deleted Successfully", "", {
+      duration: 3000,
+      panelClass: ['green-snackbar', 'login-snackbar'],
+     });
   }
 
   submitAction(){
