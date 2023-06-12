@@ -1,5 +1,5 @@
 <app-head></app-head>
-<div style="background-image: url(assets/360_F_119115529_mEnw3lGpLdlDkfLgRcVSbFRuVl6sMDty.jpg);height: 173vh;">
+<div style="background-image: url(assets/16692.jpg);height: 173vh;">
   <section class="container forms">
     <div class="form login">
       <div class="form-content">
@@ -7,7 +7,8 @@
         <form action="#" [formGroup]="loginForm">
           <div class=" input-field mb-5">
             <label style="font-weight: bold; font-size: 20px;color: blueviolet;" class="input-group">Email</label>
-            <input placeholder="Enter your email" formControlName="email" required class="input-group form-control">
+            <p>
+            <input placeholder="Enter your email" formControlName="email" required class="input-group form-control"><i class="validation"><span></span><span></span></i></p>
             <span class="text-danger" *ngIf="loginForm.controls.email.touched && loginForm.controls.email.invalid">
               <span *ngIf="loginForm.controls.email.errors.required">This field is mandatory.</span>
               <span *ngIf="loginForm.controls.email.errors.pattern">This field is invalid.</span>
@@ -33,7 +34,7 @@
             </div>
           </div>
           <div class="form-link">
-            <a href="#" class="forgot-pass">Forgot password?</a>
+            <a href="#" class="forgot-pass" routerLink="/forgotpassword" >Forgot password?</a>
           </div>
           <div class="button input-box input-group">
             <button mat-raised-button color="primary" type="submit" (click)="handleSubmit()"
@@ -43,7 +44,7 @@
           </div>
         </form>
         <div class="form-link">
-          <span>Don't have an account? <a href="#" class="link signup-link">Signup</a></span>
+          <span>Don't have an account? <a href="#" class="link signup-link" routerLink="/signup" >Signup</a></span>
         </div>
       </div>
       <div class="social-container">
@@ -54,4 +55,5 @@
     </div>
 
   </section>
+  </div>
   <app-footer></app-footer>
