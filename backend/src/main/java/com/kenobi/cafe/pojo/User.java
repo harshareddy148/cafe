@@ -1,11 +1,16 @@
 package com.kenobi.cafe.pojo;
 
+import com.sun.istack.NotNull;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.security.Provider;
+import javax.persistence.Enumerated;
+import javax.persistence.EnumType;
+
 
 @NamedQuery(name = "User.findByEmailId", query = "select u from User u where u.email =:email")
 @NamedQuery(name = "User.getAllUser", query = "select new com.kenobi.cafe.wrapper.UserWrapper(u.id, u.name, u.email, u.contactNumber, u.status) from User u where u.role='user'")
@@ -40,6 +45,8 @@ public class User implements Serializable {
 
     @Column(name="role")
     private  String role;
+
+
 
 
 }

@@ -1,0 +1,20 @@
+[core]
+	repositoryformatversion = 0
+	filemode = false
+	bare = false
+	logallrefupdates = true
+	symlinks = false
+	ignorecase = true
+[submodule]
+	active = .
+[remote "origin"]
+	url = https://github.com/harshareddy148/cafe.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "main"]
+	remote = origin
+	merge = refs/heads/main
+[lfs]
+	repositoryformatversion = 0
+[branch "harsha"]
+	remote = origin
+	merge = refs/heads/harsha
